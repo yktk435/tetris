@@ -39,40 +39,37 @@ class Block {
     //               │
     //               ↓
     //               x'=-y
-    this.block = [
-      // □
-      //□□□
-      [
-        [0, 0],
-        [1, 0],
-        [0, -1],
-        [-1, 0]
-      ],
-      // □□
-      // □□
-      [
-        [0, 0],
-        [1, 0],
-        [1, -1],
-        [0, -1],
-      ],
+    this.block = [{
+        // □
+        //□□□
+        shape: [
+          [0, 0],
+          [1, 0],
+          [0, -1],
+          [-1, 0]
+        ],
+        class: ['mountain-top', 'mountain']
+
+      }, {
+        // □□
+        // □□
+        shape: [
+          [0, 0],
+          [1, 0],
+          [1, -1],
+          [0, -1],
+        ],
+        class: ['square-top', 'square']
+      }
 
     ]
     this.type = type //作成するブロクのタイプを覚えておく
-    this.nowBlock = this.block[type]
+    this.nowBlock = this.block[type].shape
     this.tile = new Tile()
     this.init()
 
     window.onkeydown = (e) => {
       this.move(e)
-      // if (e.keyCode === 37) {
-      //     this.moveLeft();
-      // } else if (e.keyCode === 38) {
-      //     this.rotate();
-      // } else if (e.keyCode === 39) {
-      //     this.moveRight();
-      // } else if (e.keyCode === 40) {
-      //     this.fall();
     }
 
 
@@ -104,7 +101,7 @@ class Block {
       });
     } else if (e.keyCode === 38) {
       //上
-       this.rot();
+      this.rot();
     } else if (e.keyCode === 39) {
       //右
       this.nowBlock.forEach(item => {
@@ -113,12 +110,10 @@ class Block {
     } else if (e.keyCode === 40) {
       //下
       this.nowBlock.forEach(item => {
-        item[1] += 2;
+        item[1]++;
       });
     }
-    this.nowBlock.forEach(item => {
-      item[1]++;
-    });
+
     this.draw()
 
   }
@@ -127,15 +122,34 @@ class Block {
     console.log(this.nowBlock)
   }
   draw() {
+    const NUM=this.tile.tile[0].length
+    const NUM2=this.tile.tile.length
     //ボードをすべて0にする
     this.tile.tile.forEach(item => {
       item.fill(0, 1, item.length - 1)
     })
+    //すべてのクラス名を初期化する
+    Array.from(document.querySelectorAll('td')).forEach((item,i) => {
+      if (i % NUM == 0 || (i + 1) % NUM == 0 || NUM2*(NUM-1)<=i)return;
+      item.className = ''
+    });
+
 
     this.nowBlock.forEach(item => {
+      
       this.tile.tile[Math.abs(item[1])][Math.abs(item[0])] = 1
+      Array.from(document.querySelectorAll('td'))[NUM * Math.abs(item[1]) + Math.abs(item[0])].className = this.block[this.type].class[1]
     });
-    console.log(this.tile.tile)
+
+    Array.from(document.querySelectorAll('td')).forEach((el, i) => {
+      if (i % NUM == 0 || (i + 1) % NUM == 0 || NUM2*(NUM-1)<=i) return;
+
+    })
+
+
+    
+
+
   }
   init() {
     this.nowBlock.forEach((item) => {

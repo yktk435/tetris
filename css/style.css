@@ -1,24 +1,63 @@
 body {
-    background-color: #263238;
-}
-table {
-    margin: 0 auto; /* 中央寄せ */
-    width: 400px;
-    height: 800px;
-}
-td {
-    background-color: #455A64;
-    width: 10%; /* 横10マス */
-    height: 5%; /* 縦20マス */
+  background: linear-gradient(0deg, rgb(10, 0, 0), rgb(150, 0, 0));
 }
 
+table {
+  margin: 0 auto;
+  /* 中央寄せ */
+  width: 300px;
+  height: 600px;
+  border-collapse: collapse;/*セル同士の間に隙間を空けない*/
+}
+
+td {
+  
+  /* background-color: #455A64; */
+  width: 5%;
+  /* 横10マス */
+  height: 3%;
+  /* 縦20マス */
+}
+
+.outarea {
+  background: linear-gradient(45deg, rgb(74, 74, 74), rgb(144, 144, 144));
+   border-radius: 2px;
+}
 
 .default {
-    background-color: #455A64;
+  background-color: #455A64;
 }
-.stick {
-    background-color: #03A9F4;
+
+.stick-top {
+  background-color: #03A9F4;
+  border-top: 8px solid #80D8FF;
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
 }
+
 .stick {
-    background-color: #03A9F4;
+  background-color: #03A9F4;
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+}
+
+.mountain-top {
+  background-color: rgb(70, 0, 125);
+  border-top: 8px solid rgb(124, 0, 221);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+}
+
+.mountain {
+  background-color: rgb(70, 0, 125);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+}
+
+
+.square-top {
+  background-color: rgb(150, 153, 0);
+  border-top: 8px solid rgb(255, 253, 88);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+}
+
+.square {
+  background-color: rgb(150, 153, 0);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
 }
