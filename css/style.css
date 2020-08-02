@@ -5,8 +5,8 @@ body {
 table {
   margin: 0 auto;
   /* 中央寄せ */
-  width: 300px;
-  height: 600px;
+  width: 400px;
+  height: 680px;
   border-collapse: collapse;/*セル同士の間に隙間を空けない*/
 }
 
