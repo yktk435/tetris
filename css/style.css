@@ -1,8 +1,10 @@
 body {
-  background: linear-gradient(0deg, rgb(172, 172, 172), rgb(228, 228, 228));
+  background: linear-gradient(90deg, rgb(250, 121, 184), rgb(250, 199, 111));
+  
 }
 
 table {
+  background: linear-gradient(0deg, rgb(109, 0, 167),rgb(181, 0, 255));
   margin: 0 auto;
   /* 中央寄せ */
   width: 400px;
@@ -12,93 +14,96 @@ table {
 
 td {
   
-  /* background-color: #455A64; */
   width: 5%;
   /* 横10マス */
   height: 3%;
   /* 縦20マス */
 }
-
 .outarea {
-  background: linear-gradient(45deg, rgb(74, 74, 74), rgb(144, 144, 144));
-   border-radius: 2px;
+  background: linear-gradient(0deg, rgb(66, 0, 207), rgb(45, 4, 161));
+  
+   border-radius: 1px;
+}
+.curve{
+   border-radius: 100px 25px 50px 50px ;
 }
 
 .default {
-  background-color: #455A64;
+  background-color: rgb(1, 0, 54,0.8);
+  border-radius: 6px;
 }
 
 .stick-top {
   background-color: #03A9F4;
   border-top: 8px solid #80D8FF;
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .stick {
   background-color: #03A9F4;
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .mountain-top {
   background-color: rgb(70, 0, 125);
   border-top: 8px solid rgb(124, 0, 221);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .mountain {
   background-color: rgb(70, 0, 125);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 
 .square-top {
   background-color: rgb(150, 153, 0);
   border-top: 8px solid rgb(255, 253, 88);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .square {
   background-color: rgb(150, 153, 0);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
-.l-top {
+.ano-l-top {
   background-color: rgb(204, 92, 0);
   border-top: 8px solid rgb(230, 138, 0);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
-}
-
-.l {
-  background-color: rgb(204, 92, 0);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
-}
-.ano-l-top {
-  background-color: rgb(0, 56, 164);
-  border-top: 8px solid rgb(62, 88, 255);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .ano-l {
+  background-color: rgb(204, 92, 0);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+}
+.l-top {
   background-color: rgb(0, 56, 164);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  border-top: 8px solid rgb(62, 88, 255);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+}
+
+.l {
+  background-color: rgb(0, 56, 164);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 .two-top {
   background-color: rgb(162, 5, 0);
   border-top: 8px solid rgb(251, 59, 59);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .two {
   background-color: rgb(162, 5, 0);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 .s-top {
   background-color: rgb(0, 181, 2);
   border-top: 8px solid rgb(74, 255, 97);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .s {
   background-color: rgb(0, 181, 2);
-  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }

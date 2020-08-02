@@ -185,6 +185,9 @@ class Block {
   }
   chechTouchAndFix(block, e) { //壁に触った 他のブロックと触ったなどを検知して修正
     block.forEach((item, i) => {
+
+      //壁との接触
+      
       if (item[0] <= 0) { //左の壁にぶつかった
         block.forEach(item => item[0]++);
       }
@@ -194,6 +197,9 @@ class Block {
       if (item[1] == this.tile.y - 1) { //一番下に着いたら
         block.forEach(item => item[1]--);
       }
+      
+      //ブロック同士のの接触
+
       if (this.tile.tile[item[1]][item[0]] == 1) { //1と接触したらその方向へは進めない
         console.log('-------------')
         if (e.keyCode === 37) {
@@ -217,86 +223,73 @@ class Block {
             block.forEach(item => item[0]--);
           }
         }
-
       }
     })
     return block;
   }
-  fixed() {
-    this.nowBlock.forEach((item, i) => {
-      this.tile.tile[Math.abs(item[1])][Math.abs(item[0])] = 1
-    });
-    
-  }
-  show() {
-    console.log(this.nowBlock)
-    console.log(this.tile.tile)
+  fixed() {//ブロックを固定
+    this.nowBlock.forEach(item => this.tile.tile[Math.abs(item[1])][Math.abs(item[0])] = 1);
   }
   draw() {
     const NUM = this.tile.x
     const NUM2 = this.tile.y
     const td = Array.from(document.querySelectorAll('td'));
-    let tileCopy = JSON.parse(JSON.stringify(this.tile.copy));
-
-
-
-
-    //ボードをすべて0にする
-    //今のブロックを反映する
-    this.tile.tile.forEach(item => {
-      // item.fill(0, 1, item.length - 1)
-    })
-    //すべてのクラス名を初期化する
+    let css
+    // let tileCopy = JSON.parse(JSON.stringify(this.tile.copy));
+    
+    // タイルを初期化
     td.forEach((item, i) => {
       if (i % NUM == 0 || (i + 1) % NUM == 0 || (NUM2 - 1) * (NUM) <= i) {
         item.className = 'outarea'
-        return;
+        
       }
-
       if (this.tile.tile[Math.floor(i / 12)][i % 12] == 0) { //tileが0なら
-        item.className = ''
+        item.className = 'default'
       }
-
     });
 
 
     this.nowBlock.forEach((item, i) => {
+      css = this.block[this.type].class[0]
+      
+      if (this.isBlockOonBlock(item,this.nowBlock)) { //それより上にブロックがあるなら
+        css = this.block[this.type].class[1]
+      }
 
-      tileCopy[Math.abs(item[1])][Math.abs(item[0])] = 1
-
-      td[NUM * Math.abs(item[1]) + Math.abs(item[0])].className = this.block[this.type].class[1]
+      td[NUM * Math.abs(item[1]) + Math.abs(item[0])].className = css
     });
 
-    td.forEach((el, i) => {
-      if (i % NUM == 0 || (i + 1) % NUM == 0 || NUM2 * (NUM - 1) <= i) return;
-
-
-    })
-
-
-
-
-
-  }
-  init() {
-    console.log('init ▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽▽')
-    this.nowBlock.forEach((item) => {
-      item[0] += 5;
-      item[1] += 1;
-    });
-    console.log(this.nowBlock)
-    console.log('init ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲')
-
-
+    // td.forEach((el, i) => {
+    //   if (i % NUM == 0 || (i + 1) % NUM == 0 || NUM2 * (NUM - 1) <= i) return;
+    // })
   }
 
+  isBlockOonBlock(item,b) {// 上にブロックがあるか判定
+    let arr
+    let bool=0
+    
+      arr = JSON.parse(JSON.stringify(item));
+      arr[1]--;
+      
+      b.forEach(item2 => {
+        if (JSON.stringify(arr) == JSON.stringify(item2)) {
+          bool=1
+        }
+      })
+    return bool;
+  }
+
+  init() {//ブロックの初期位置
+    this.nowBlock.forEach((item) => item[0] += (this.tile.x - 2) / 2);
+  }
 }
 
 class App {
-  constructor(type=6) {
+  constructor(type = 6) {
     this.tile = new Tile();
-    this.block = new Block(this.tile,type)
-    this.tile.dcopy()
+    this.block = new Block(this.tile, type)
+    
+    
 
   }
   gameStart() {
