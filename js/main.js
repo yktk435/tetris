@@ -285,17 +285,15 @@ class Block {
 }
 
 class App {
-  constructor(type = 6) {
+  constructor(type = this.getRandomIntInclusive(0,6)) {
     this.tile = new Tile();
     this.block = new Block(this.tile, type)
     
-    
-
   }
   gameStart() {
 
   }
-  createBlock(type = 0) {
+  createBlock(type = this.getRandomIntInclusive(0,6)) {
     this.block.fixed();
     this.tile = this.block.tile
     this.block = new Block(this.tile, type)
@@ -304,6 +302,12 @@ class App {
     console.log(this.block)
     console.log(this.tile.tile)
   }
+  getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 }
 

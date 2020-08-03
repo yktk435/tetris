@@ -30,7 +30,8 @@ td {
 }
 
 .default {
-  background-color: rgb(1, 0, 54,0.8);
+
+  background-color: rgb(1, 0, 54,0.75);
   border-radius: 6px;
 }
 
@@ -46,25 +47,25 @@ td {
 }
 
 .mountain-top {
-  background-color: rgb(70, 0, 125);
-  border-top: 8px solid rgb(124, 0, 221);
+  background-color: rgb(84, 22, 215);
+  border-top: 8px solid rgb(108, 57, 215);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .mountain {
-  background-color: rgb(70, 0, 125);
+  background-color: rgb(84, 22, 215);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 
 .square-top {
-  background-color: rgb(150, 153, 0);
+  background-color: rgb(185, 189, 3);
   border-top: 8px solid rgb(255, 253, 88);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .square {
-  background-color: rgb(150, 153, 0);
+  background-color: rgb(185, 189, 3);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
@@ -79,13 +80,13 @@ td {
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 .l-top {
-  background-color: rgb(0, 56, 164);
-  border-top: 8px solid rgb(62, 88, 255);
+  background-color: rgb(37, 76, 152);
+  border-top: 8px solid rgb(113, 173, 254);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 
 .l {
-  background-color: rgb(0, 56, 164);
+  background-color: rgb(37, 76, 152);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
 }
 .two-top {
