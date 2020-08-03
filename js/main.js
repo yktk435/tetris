@@ -162,15 +162,15 @@ class Block {
             y: 0
           },
           {
-            x: -1,
-            y: 0
-          },
-          {
             x: 0,
             y: -1
           },
           {
             x: 1,
+            y: 0
+          },
+          {
+            x: -1,
             y: -1
           },
         ],
@@ -248,28 +248,15 @@ class Block {
         item.y++;
       });
     }else if (e.keyCode === 13) {
-      //一気に下に落とす
-      console.log('enter')
-      //4つのブロックのy座標が一番大きいブロックを見つけてそれが18になるようにする
-      let max=[]
-      let key
-      let diff
-      this.nowBlock.forEach((item) => {
-        max.push(item.y)
-      });
-      
-      for (var i = 0; i < max.length; i++) {
-        if(max[i]==Math.max(...max)){
-          key=i          
-          break;
-        }
-      }
-      diff=18-this.nowBlock[i].y
-      this.nowBlock.forEach((item) => {
-        item.y+=diff
-      });
-      
+      for (var i = 0; i < this.tile.y; i++) {
+        this.nowBlock.forEach(item => {
+          item.y++;
+        });
         
+        e=JSON.parse(JSON.stringify(e))
+        e.keyCode=40
+        this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, e)
+      }
 
     }
 
@@ -344,15 +331,15 @@ class Block {
     this.nowBlock.forEach(item => this.tile.tile[Math.abs(item.y)][Math.abs(item.x)] = 1);
   }
   draw() {
-    const NUM = this.tile.x
-    const NUM2 = this.tile.y
+    const X = this.tile.x
+    const Y = this.tile.y
     const td = Array.from(document.querySelectorAll('td'));
     let css
 
 
     // タイルを初期化
     td.forEach((item, i) => {
-      if (i % NUM == 0 || (i + 1) % NUM == 0 || (NUM2 - 1) * (NUM) <= i) {
+      if (i % X == 0 || (i + 1) % X == 0 || (Y - 1) * (X) <= i) {
         item.className = 'outarea'
 
       }
@@ -369,7 +356,7 @@ class Block {
         css = this.block[this.type].class[1]
       }
 
-      td[NUM * Math.abs(item.y) + Math.abs(item.x)].className = css
+      td[X * Math.abs(item.y) + Math.abs(item.x)].className = css
     });
   }
 
