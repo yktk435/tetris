@@ -39,27 +39,48 @@ class Block {
     //   │
     //   ↓
     //   y
-    
-    this.block = [
-      {
+
+    this.block = [{
         // □
         //□□□
-        shape: [
-          {x:0,y: 0},
-          {x:1,y: 0},
-          {x:0,y: -1},
-          {x:-1,y: 0}
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: 1,
+            y: 0
+          },
+          {
+            x: 0,
+            y: -1
+          },
+          {
+            x: -1,
+            y: 0
+          }
         ],
         class: ['mountain-top', 'mountain']
 
       }, {
         // □□
         // □□
-        shape: [
-        {x:0,y: 0},
-        {x:1,y: 0},
-        {x:1,y: -1},
-        {x:0,y: -1},
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: 1,
+            y: 0
+          },
+          {
+            x: 1,
+            y: -1
+          },
+          {
+            x: 0,
+            y: -1
+          },
         ],
         class: ['square-top', 'square']
       },
@@ -67,11 +88,22 @@ class Block {
         // □
         // □
         // □□
-        shape: [
-          {x:0,y: 0},
-          {x:0,y: 1},
-          {x:0,y: -1},
-          {x:1,y: -1},
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: 0,
+            y: 1
+          },
+          {
+            x: 0,
+            y: -1
+          },
+          {
+            x: 1,
+            y: -1
+          },
         ],
         class: ['l-top', 'l']
       },
@@ -79,11 +111,22 @@ class Block {
         // □
         // □
         // □□
-        shape: [
-          {x:0, y:0},
-          {x:0, y:1},
-          {x:0, y:-1},
-          {x:-1,y: -1},
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: 0,
+            y: 1
+          },
+          {
+            x: 0,
+            y: -1
+          },
+          {
+            x: -1,
+            y: -1
+          },
         ],
         class: ['ano-l-top', 'ano-l']
       },
@@ -92,48 +135,76 @@ class Block {
         // □
         // □
         // □
-        shape: [
-          {x:0, y:0},
-          {x:0, y:1},
-          {x:0, y:-1},
-          {x:0, y:-2},
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: 0,
+            y: 1
+          },
+          {
+            x: 0,
+            y: -1
+          },
+          {
+            x: 0,
+            y: 2
+          },
         ],
         class: ['stick-top', 'stick']
       },
       {
         // □□
         //  □□
-        shape: [
-          {x:0, y:0},
-          {x:0, y:1},
-          {x:-1,y: 0},
-          {x:1, y:1},
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: -1,
+            y: 0
+          },
+          {
+            x: 0,
+            y: -1
+          },
+          {
+            x: 1,
+            y: -1
+          },
         ],
         class: ['two-top', 'two']
       },
       {
         //  □□
         // □□
-        shape: [
-          {x:0, y:0},
-          {x:1, y:0},
-          {x:0, y:1},
-          {x:-1,y: 1},
+        shape: [{
+            x: 0,
+            y: 0
+          },
+          {
+            x: 0,
+            y: -1
+          },
+          {
+            x: -1,
+            y: 0
+          },
+          {
+            x: 1,
+            y: -1
+          },
         ],
         class: ['s-top', 's']
       }
 
     ]
-    this.type = type //作成するブロクのタイプを覚えておく
+    this.type = type
     this.nowBlock = this.block[type].shape
-    console.log(this.nowBlock)
     this.tile = tile
-    console.log(this.tile)
     this.init()
 
-    window.onkeydown = (e) => {
-      this.move(e)
-    }
 
 
   }
@@ -144,7 +215,6 @@ class Block {
     let tempx
     let tempy
     //原点の値を一時コピー
-    //原点は配列の一番最初に書く
     [tempx, tempy] = [this.nowBlock[0].x, this.nowBlock[0].y]
     this.nowBlock.forEach(item => {
       [item.x, item.y] = [(-1) * item.y, item.x]
@@ -157,6 +227,7 @@ class Block {
     });
   }
   move(e) {
+    let tempBlock = []
     if (e.keyCode === 37) {
       //左
       this.nowBlock.forEach(item => {
@@ -164,6 +235,7 @@ class Block {
       });
     } else if (e.keyCode === 38) {
       //上
+      tempBlock = JSON.parse(JSON.stringify(this.nowBlock))
       this.rot();
     } else if (e.keyCode === 39) {
       //右
@@ -175,58 +247,100 @@ class Block {
       this.nowBlock.forEach(item => {
         item.y++;
       });
+    }else if (e.keyCode === 13) {
+      //一気に下に落とす
+      console.log('enter')
+      //4つのブロックのy座標が一番大きいブロックを見つけてそれが18になるようにする
+      let max=[]
+      let key
+      let diff
+      this.nowBlock.forEach((item) => {
+        max.push(item.y)
+      });
+      
+      for (var i = 0; i < max.length; i++) {
+        if(max[i]==Math.max(...max)){
+          key=i          
+          break;
+        }
+      }
+      diff=18-this.nowBlock[i].y
+      this.nowBlock.forEach((item) => {
+        item.y+=diff
+      });
+      
+        
+
     }
 
-    this.nowBlock = this.chechTouchAndFix(this.nowBlock, e)
+    this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, e)
 
     this.draw()
 
   }
-  chechTouchAndFix(block, e) { //壁に触った 他のブロックと触ったなどを検知して修正
-    block.forEach((item, i) => {
+  finish(){//処理を終わりにして次のブロックに映る
+    
+  }
+  chechTouchAndFix(b, tempBlock, e) { //壁に触った 他のブロックと触ったなどを検知して修正
+    let count = 0;
+    b.forEach((item, i) => {
 
       //壁との接触
-      
+
       if (item.x <= 0) { //左の壁にぶつかった
-        block.forEach(item => item.x++);
+        b.forEach(it => it.x++);
       }
       if (item.x >= this.tile.x - 1) { //右の壁にぶつかった
-        block.forEach(item => item.x--);
+        b.forEach(it => it.x--);
       }
       if (item.y == this.tile.y - 1) { //一番下に着いたら
-        block.forEach(item => item.y--);
+        b.forEach(it => it.y--);
       }
-      
-      //ブロック同士のの接触
+
+      //ブロック同士の接触
 
       if (this.tile.tile[item.y][item.x] == 1) { //1と接触したらその方向へは進めない
-        console.log('-------------')
+
         if (e.keyCode === 37) {
           //左
-          block.forEach(item => item.x++);
+          b.forEach(it => it.x++);
         } else if (e.keyCode === 39) {
           //右
-          block.forEach(item => item.x--);
+          b.forEach(it => it.x--);
         } else if (e.keyCode === 40) {
           //下
-          block.forEach(item => item.y--);
+          b.forEach(it => it.y--);
         } else if (e.keyCode === 38) {
+
           //上
-          if (block[0].y - item.y > 0) {
-            block.forEach(item => item.y++);
-          } else if (block[0].y - item.y < 0) {
-            block.forEach(item => item.y--);
-          } else if (block[0].x - item.x > 0) {
-            block.forEach(item => item.x++);
-          } else if (block[0].x - item.x < 0) {
-            block.forEach(item => item.x--);
+          if (b[0].y - item.y > 0) { //回転して既存ブロックにぶつかったら避ける
+            b.forEach(i => i.y++);
+            count++
+          } else if (b[0].y - item.y < 0) {
+            b.forEach(it => it.y--);
+            count++
+          } else if (b[0].x - item.x > 0) {
+            b.forEach(it => it.x++);
+            count++
+          } else if (b[0].x - item.x < 0) {
+            b.forEach(it => it.x--);
+            count++
           }
         }
       }
     })
-    return block;
+    return count >= 1 ? tempBlock : b;
   }
-  fixed() {//ブロックを固定
+  chechTouchAndFixSecond(b) {
+    let check = 0;
+    b.forEach((item, i) => {
+      if (this.tile.tile[item.y][item.x] == 1) { //それでもぶつかるなら
+        check++
+      }
+    });
+    return check ? check - 1 : check
+  }
+  fixed() { //ブロックを固定
     this.nowBlock.forEach(item => this.tile.tile[Math.abs(item.y)][Math.abs(item.x)] = 1);
   }
   draw() {
@@ -234,13 +348,13 @@ class Block {
     const NUM2 = this.tile.y
     const td = Array.from(document.querySelectorAll('td'));
     let css
-    // let tileCopy = JSON.parse(JSON.stringify(this.tile.copy));
-    
+
+
     // タイルを初期化
     td.forEach((item, i) => {
       if (i % NUM == 0 || (i + 1) % NUM == 0 || (NUM2 - 1) * (NUM) <= i) {
         item.className = 'outarea'
-        
+
       }
       if (this.tile.tile[Math.floor(i / 12)][i % 12] == 0) { //tileが0なら
         item.className = 'default'
@@ -250,53 +364,61 @@ class Block {
 
     this.nowBlock.forEach((item, i) => {
       css = this.block[this.type].class[0]
-      
-      if (this.isBlockOonBlock(item,this.nowBlock)) { //それより上にブロックがあるなら
+
+      if (this.isBlockOonBlock(item, this.nowBlock)) { //それより上にブロックがあるなら
         css = this.block[this.type].class[1]
       }
 
       td[NUM * Math.abs(item.y) + Math.abs(item.x)].className = css
     });
-
-    // td.forEach((el, i) => {
-    //   if (i % NUM == 0 || (i + 1) % NUM == 0 || NUM2 * (NUM - 1) <= i) return;
-    // })
   }
 
-  isBlockOonBlock(item,b) {// 上にブロックがあるか判定
+  isBlockOonBlock(item, b) { // 上にブロックがあるか判定
     let arr
-    let bool=0
-    if(typeof(item)=="Object"){
-      arr = Object.assign({},item)
-    }else{
-          arr = JSON.parse(JSON.stringify(item));
-    }
-      
+    let bool = 0
+    if (typeof(item) == "Object") {
+      arr = Object.assign({}, item)
+      arr[1]--;
+    } else {
+      arr = JSON.parse(JSON.stringify(item));
       arr.y--;
-      
-      b.forEach(item2 => {
-        if (JSON.stringify(arr) == JSON.stringify(item2)) {
-          bool=1
-        }
-      })
+    }
+    b.forEach(item2 => {
+      if (JSON.stringify(arr) == JSON.stringify(item2)) {
+        bool = 1
+      }
+    })
     return bool;
   }
 
-  init() {//ブロックの初期位置
-    this.nowBlock.forEach((item) => item.x += (this.tile.x - 2) / 2);
+  init() { //ブロックの初期位置
+    this.nowBlock.forEach((item) => {
+      item.x += (this.tile.x - 2) / 2
+      item.y++
+    });
   }
 }
 
 class App {
-  constructor(type = this.getRandomIntInclusive(0,6)) {
+  constructor(type = this.getRandomIntInclusive(0, 6)) {
     this.tile = new Tile();
     this.block = new Block(this.tile, type)
-    
-  }
-  gameStart() {
+    this.time=0;
+    window.onkeydown = (e) => {
+      this.block.move(e)
+      if(e.keyCode==13){
+        this.createBlock()
+      }
+      
+    }
+
 
   }
-  createBlock(type = this.getRandomIntInclusive(0,6)) {
+  gameStart() {
+    this.block.draw()
+    this.time++;
+  }
+  createBlock(type = this.getRandomIntInclusive(0, 6)) {
     this.block.fixed();
     this.tile = this.block.tile
     this.block = new Block(this.tile, type)
@@ -306,13 +428,21 @@ class App {
     console.log(this.tile.tile)
   }
   getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 }
+
+
+window.onload=()=>{
+  
+  // let g = new Block()
+  let game = new App()
+
+  game.gameStart()
+
+
 }
 
 
-
-// let g = new Block()
-let g = new App()
