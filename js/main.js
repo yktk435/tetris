@@ -214,6 +214,7 @@ class Block {
     this.type = type
     this.nowBlock = this.block[type].shape
     this.tile = tile
+
     this.init()
 
   }
@@ -236,6 +237,7 @@ class Block {
     });
   }
   move(e) {
+
     let tempBlock = []
     if (e.keyCode === 37) {
       //左
@@ -351,11 +353,59 @@ class Block {
 
     //描画
     this.nowBlock.forEach((item, i) => {
-      css = this.block[this.type].class[0]
+      // css = this.block[this.type].class[0]
+      css = this.block[this.type].class[1]
       css = this.isBlockOonBlock(item, this.nowBlock) ? this.block[this.type].class[1] : css
 
       this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = css
     });
+
+    //ガイドを描画
+
+    let guide = JSON.parse(JSON.stringify(this.nowBlock))
+
+    label:
+      for (var i = 0; i < this.tile.y; i++) {
+        guide.forEach((el) => {
+          el.y++
+        });
+
+        for (var el of guide) {
+          if (this.tile.tile[Math.abs(el.y)][Math.abs(el.x)] == 1) {
+            guide.forEach((el) => {
+              el.y--
+            });
+            break label
+          }
+
+        }
+      }
+    
+    for (var item of guide){
+      let res
+
+      for (var target of this.nowBlock) {
+        res = 0
+        
+        
+        if (JSON.stringify(target) == JSON.stringify(item)) {
+          res = 1
+          console.log('一致');
+          break;
+        }
+      }
+      if (res) {
+        if (this.tile.tile[Math.abs(el.y)][Math.abs(el.x)] != 1) {
+          // this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = 'default'
+        } 
+
+      }
+      else {
+        this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = 'guide'
+
+      }
+
+    }
   }
 
   isBlockOonBlock(item, b) { // 上にブロックがあるか判定
@@ -386,7 +436,7 @@ class Block {
 
 class App {
   constructor(type = this.getRandomIntInclusive(0, 6)) {
-  // constructor(type = 3) {
+    // constructor(type = 3) {
     this.tile = new Tile();
     this.block = new Block(this.tile, type)
     this.time = 0;
@@ -403,7 +453,7 @@ class App {
     this.time++;
   }
   createBlock(type = this.getRandomIntInclusive(0, 6)) {
-  // createBlock(type = 3) {
+    // createBlock(type = 3) {
     this.block.fixed();
     this.alignCheckAndFix()
     this.block = new Block(this.block.tile, type)
@@ -429,28 +479,22 @@ class App {
     return
   }
   removeLine(lines) {
-    
+
     const X = this.tile.x
     const Y = this.tile.y
-    let tdCopy=[];
+    let tdCopy = [];
     let tileCopy;
-    
-    
-this.tile.td.forEach((item,i)=>{
-  let temp=[]
-  item.forEach((item2) => {
-    temp.push(item2.className)
-  });
-  tdCopy.push(temp)
-  
-})
+
+
+    this.tile.td.forEach((item, i) => {
+      let temp = []
+      item.forEach((item2) => {
+        temp.push(item2.className)
+      });
+      tdCopy.push(temp)
+
+    })
     console.log(tdCopy)
-
-    
-    // tdCopy = this.tile.createTd() //今のブロックの色の状態を保存
-
-    
-
     for (const lineNum of lines) { //lineNumは行番号
 
       for (var i = 0; i < X; i++) {
@@ -466,46 +510,14 @@ this.tile.td.forEach((item,i)=>{
             this.tile.tile[i][j] = 0
             this.tile.td[i][j].className = 'test'
           } else {
-            if (i >= lineNum) {
-              console.log('d')
-            }
-            // if (tileCopy[i - 1][j] == 1) {
-              // this.tile.tile[i - 1][j] = 0
-              this.tile.tile[i][j] = tileCopy[i - 1][j]
-              // this.tile.td[i - 1][j].className = 'test'
-              this.tile.td[i][j].className = tdCopy[i - 1][j]
-            // }else{this.tile.td[i - 1][j].className = 'test'}
-
+            this.tile.tile[i][j] = tileCopy[i - 1][j]
+            this.tile.td[i][j].className = tdCopy[i - 1][j]
           }
-
-
         }
       }
     }
     console.log('fin')
 
-    //ブロックが降りてくる描画
-
-    // 
-    // 
-    // //タイル初期化
-    // 
-    // for (var i = 0; i < Y - 1; i++) {
-    //   for (var j = 1; j < X - 1; j++) {
-    //     // console.log(this.tile.td[i][j].className)
-    //     if (this.tile.tile[i][j] == 0) {
-    //       this.tile.td[i][j].className = 'default'
-    //     }
-    //   }
-    // }
-    // 
-    // //描画
-    // this.nowBlock.forEach((item, i) => {
-    //   css = this.block[this.type].class[0]
-    //   css = this.isBlockOonBlock(item, this.nowBlock) ? this.block[this.type].class[1] : css
-    // 
-    //   this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = css
-    // });
 
   }
   show() {
