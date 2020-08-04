@@ -25,7 +25,6 @@ class Tile {
     this.x = this.tile[0].length
     this.y = this.tile.length
     this.td = this.createTd();
-
   }
   createTd() {
     let d = Array.from(document.querySelectorAll('td'));
@@ -217,30 +216,24 @@ class Block {
     let tempy
     //原点の値を一時コピー
     [tempx, tempy] = [this.nowBlock[0].x, this.nowBlock[0].y]
-    this.nowBlock.forEach(item => {
-      [item.x, item.y] = [(-1) * item.y, item.x]
-    });
+    this.nowBlock.forEach(item => [item.x, item.y] = [(-1) * item.y, item.x]);
     //平行移動
-    tempx = tempx - this.nowBlock[0].x
-    tempy = tempy - this.nowBlock[0].y
-    this.nowBlock.forEach(item => {
-      [item.x, item.y] = [item.x + tempx, item.y + tempy]
-    });
+    [tempx,tempy]=[tempx - this.nowBlock[0].x,tempy - this.nowBlock[0].y]
+    this.nowBlock.forEach(item => [item.x, item.y] = [item.x + tempx, item.y + tempy]);
   }
   move(e) {
     let tempBlock = JSON.parse(JSON.stringify(this.nowBlock))
-    
-    if (e.keyCode === 37) {//左
+
+    if (e.keyCode === 37) { //左
       this.nowBlock.forEach(item => item.x--);
-    } else if (e.keyCode === 38) {//上
-      tempBlock = JSON.parse(JSON.stringify(this.nowBlock))
+    } else if (e.keyCode === 38) { //上
       this.rot();
-    } else if (e.keyCode === 39) {//右
+    } else if (e.keyCode === 39) { //右
       this.nowBlock.forEach(item => item.x++);
-    } else if (e.keyCode === 40) {//下
+    } else if (e.keyCode === 40) { //下
       this.nowBlock.forEach(item => item.y++);
     } else if (e.keyCode === 13) { //一番下まで落とす
-      for (var i = 0; i < this.tile.y; i++) {
+      for (let i = 0; i < this.tile.y; i++) {
         this.nowBlock.forEach(item => item.y++)
         e = JSON.parse(JSON.stringify(e))
         e.keyCode = 40
@@ -248,37 +241,19 @@ class Block {
       }
     }
     this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, e)
-
     this.draw()
-
   }
   chechTouchAndFix(b, tempBlock, e) { //壁に触った 他のブロックと触ったなどを検知して修正
     let count = 0;
     b.forEach((item, i) => {
-      //壁との接触
-
-      if (item.x <= 0) { //左の壁にぶつかった
-        b.forEach(it => it.x++);
-      }
-      if (item.x >= this.tile.x - 1) { //右の壁にぶつかった
-        b.forEach(it => it.x--);
-      }
-      if (item.y == this.tile.y - 1) { //一番下に着いたら
-        b.forEach(it => it.y--);
-      }
-
-      //ブロック同士の接触
-
       if (this.tile.tile[item.y][item.x] == 1) { //1と接触したらその方向へは進めない
-
-        if (e.keyCode === 37) {//左
+        if (e.keyCode === 37 || item.x == 0) { //左
           b.forEach(it => it.x++);
-        } else if (e.keyCode === 39) {//右
+        } else if (e.keyCode === 39 || item.x == this.tile.x - 1) { //右
           b.forEach(it => it.x--);
-        } else if (e.keyCode === 40) {//下
+        } else if (e.keyCode === 40 || this.tile.y - 1) { //下
           b.forEach(it => it.y--);
-        } else if (e.keyCode === 38) {//上
-          
+        } else if (e.keyCode === 38) { //上
           if (b[0].y - item.y > 0) { //回転して既存ブロックにぶつかったら避ける
             b.forEach(i => i.y++);
             count++
@@ -309,97 +284,69 @@ class Block {
   fixed() { //ブロックを固定
     this.nowBlock.forEach(item => this.tile.tile[Math.abs(item.y)][Math.abs(item.x)] = 1);
   }
-
   draw(tile) {
     const X = this.tile.x
     const Y = this.tile.y
     let css
-
-
-    //タイル初期化
-
-    for (var i = 0; i < Y - 1; i++) {
-      for (var j = 1; j < X - 1; j++) {
-        // console.log(this.tile.td)
-        if (this.tile.tile[i][j] == 0) {
-          this.tile.td[i][j].className = 'default'
-        }
-      }
-    }
-
-    //描画
-    this.nowBlock.forEach((item, i) => {
-      // css = this.block[this.type].class[0]
-      css = this.block[this.type].class[1]
-      css = this.isBlockOonBlock(item, this.nowBlock) ? this.block[this.type].class[1] : css
-
-      this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = css
-    });
-
-    //ガイドを描画
-
     let guide = JSON.parse(JSON.stringify(this.nowBlock))
 
-    label:
-      for (var i = 0; i < this.tile.y; i++) {
-        guide.forEach((el) => {
-          el.y++
-        });
+    //タイル初期化
+    for (let i = 0; i < Y - 1; i++) {
+      for (let j = 1; j < X - 1; j++) {
+        this.tile.td[i][j].className = this.tile.tile[i][j] == 0 ? 'default' : this.tile.td[i][j].className
+      }
+    }
+    //描画
+    this.nowBlock.forEach((item, i) => {
+      css = this.block[this.type].class[1]
+      css = this.isBlockOonBlock(item, this.nowBlock) ? this.block[this.type].class[1] : css
+      this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = css
+    });
+    //ガイドを描画
+    this.guideDraw(guide)
 
-        for (var el of guide) {
-          if (this.tile.tile[Math.abs(el.y)][Math.abs(el.x)] == 1) {
-            guide.forEach((el) => {
-              el.y--
-            });
-            break label
+  }
+  guideDraw(guide) {
+    let res
+
+    guideLoop:
+      for (let i = 0; i < this.tile.y; i++) {
+        guide.forEach(el => el.y++);
+        for (let el of guide) {
+          if (this.tile.tile[el.y][el.x] == 1) {
+            guide.forEach(el => el.y--);
+            break guideLoop
           }
-
         }
       }
-
-    for (var item of guide) {
-      let res
-
-      for (var target of this.nowBlock) {
+    for (let item of guide) {
+      for (let target of this.nowBlock) {
         res = 0
-
-
         if (JSON.stringify(target) == JSON.stringify(item)) {
           res = 1
           console.log('一致');
           break;
         }
       }
-      if (res) {
-        if (this.tile.tile[Math.abs(el.y)][Math.abs(el.x)] != 1) {
-          // this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = 'default'
-        }
-
-      } else {
-        this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = 'guide'
-
+      if (!res) {
+        this.tile.td[item.y][item.x].className = 'guide'
       }
-
     }
   }
-
   isBlockOonBlock(item, b) { // 上にブロックがあるか判定  
-    let bool = 0
     let arr = Object.assign({}, item)
-    
     arr.y--;
-    b.forEach(item2 => {
-      if (JSON.stringify(arr) == JSON.stringify(item2)) {
-        bool = 1
+    for (var item2 of b) {
+      if(JSON.stringify(arr) == JSON.stringify(item2)){
+        return true
       }
-    })
-    return bool;
+    }
+    return false;
   }
-
   init() { //ブロックの初期位置
     this.nowBlock.forEach((item) => {
-      item.x += (this.tile.x - 2) / 2
-      item.y++
+      item.x += (this.tile.x - 2) / 2;
+      item.y++;
     });
   }
 }
@@ -423,7 +370,6 @@ class App {
   }
   createBlock(type = this.getRandomIntInclusive(0, 6)) {
     // createBlock(type = 3) {
-    
     this.block.fixed();
     this.alignCheckAndFix()
     this.block = new Block(this.block.tile, type)
@@ -434,12 +380,11 @@ class App {
     for (let i = 0; i < this.tile.y - 1; i++) {
       arr = new Set(this.tile.tile[i])
       if (arr.size == 1) {
-        console.log(i, '揃った')
         this.removeLine(i)
       }
     }
   }
-  removeLine(lineNum) {//行を消してブロックを落とす
+  removeLine(lineNum) { //行を消してブロックを落とす
     const X = this.tile.x
     const Y = this.tile.y
     let tdCopy = [];
@@ -451,24 +396,17 @@ class App {
       item.forEach(item2 => temp.push(item2.className));
       tdCopy.push(temp)
     })
-     //今のブロックの色の状態を保存
+    //今のブロックの色の状態を保存
     tileCopy = JSON.parse(JSON.stringify(this.tile.tile))
-    
-    for (var i = 0; i < lineNum + 1; i++) {
-      for (var j = 1; j < X - 1; j++) {
+
+    for (let i = 0; i < lineNum + 1; i++) {
+      for (let j = 1; j < X - 1; j++) {
         if (i != 0) {
-          if (i >= lineNum) {
-            console.log('Debug')
-          }
           this.tile.tile[i][j] = tileCopy[i - 1][j]
           this.tile.td[i][j].className = tdCopy[i - 1][j]
         }
       }
     }
-  }
-  show() {
-    console.log(this.block)
-    console.log(this.tile.tile)
   }
   getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -480,5 +418,4 @@ class App {
 window.onload = () => {
   let game = new App()
   game.init()
-  console.log(game.tile.td)
 }
