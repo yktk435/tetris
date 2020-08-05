@@ -27,7 +27,7 @@ class Tile {
     this.td = this.createTd();
   }
   createTd() {
-    let d = Array.from(document.querySelectorAll('td'));
+    let d = Array.from(document.querySelectorAll('#game td'));
     let tmp = []
     let table = []
     d.forEach((el, i) => {
@@ -41,7 +41,7 @@ class Tile {
   }
 }
 class Block {
-  constructor(tile, type = 0) {
+  constructor(tile, type = this.getRandomIntInclusive(0, 6)) {
     this.block = [{
         // ┻
         shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 0,y: -1},{x: -1, y: 0 },],
@@ -220,6 +220,9 @@ class Block {
       item.y++;
     });
   }
+  getRandomIntInclusive(min, max) {//ランダムな整数の生成
+    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + min;
+  }
 }
 
 class App {
@@ -230,6 +233,10 @@ class App {
     this.interval = 900;
     this.nextBlockCount=0
     this.previousBlockState=JSON.parse(JSON.stringify(this.block.nowBlock))
+    this.stockBlock
+    this.nextBlock=[new Block(this.tile),new Block(this.tile),new Block(this.tile)]
+    console.log(this.nextBlock)
+    
     window.onkeydown = (e) => {
       this.block.move(e.keyCode)
       if (e.keyCode == 13) {
@@ -309,7 +316,7 @@ movecheck(){
 window.onload = () => {
   let game = new App()
   game.init()
-  setInterval(function(){
-    game.gameStart()
-  },game.interval)
+  // setInterval(function(){
+  //   game.gameStart()
+  // },game.interval)
 }
