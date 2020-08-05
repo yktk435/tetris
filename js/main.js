@@ -43,165 +43,40 @@ class Tile {
 class Block {
   constructor(tile, type = 0) {
     this.block = [{
-        // □
-        //□□□
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 1,
-            y: 0
-          },
-          {
-            x: 0,
-            y: -1
-          },
-          {
-            x: -1,
-            y: 0
-          }
-        ],
+        // ┻
+        shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 0,y: -1},{x: -1, y: 0 },],
         class: ['mountain-top', 'mountain']
 
       }, {
-        // □□
-        // □□
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 1,
-            y: 0
-          },
-          {
-            x: 1,
-            y: -1
-          },
-          {
-            x: 0,
-            y: -1
-          },
-        ],
+        // 田
+        shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 1,y: -1}, {x: 0,y: -1},],
         class: ['square-top', 'square']
       },
       {
-        // □
-        // □
-        // □□
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 0,
-            y: 1
-          },
-          {
-            x: 0,
-            y: -1
-          },
-          {
-            x: 1,
-            y: -1
-          },
-        ],
+        // ┗
+        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: 1,y: -1},],
         class: ['l-top', 'l']
       },
       {
-        // □
-        // □
-        // □□
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 0,
-            y: 1
-          },
-          {
-            x: 0,
-            y: -1
-          },
-          {
-            x: -1,
-            y: -1
-          },
-        ],
+        // ┛
+        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1},{x: -1,y: -1},],
         class: ['ano-l-top', 'ano-l']
       },
       {
-        // □
-        // □
-        // □
-        // □
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 0,
-            y: 1
-          },
-          {
-            x: 0,
-            y: -1
-          },
-          {
-            x: 0,
-            y: 2
-          },
-        ],
+        // |
+        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: 0, y: 2},],
         class: ['stick-top', 'stick']
       },
       {
-        // □□
-        //  □□
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 0,
-            y: -1
-          },
-          {
-            x: 1,
-            y: 0
-          },
-          {
-            x: -1,
-            y: -1
-          },
-        ],
+        //2
+        shape: [{x: 0, y: 0}, {x: 0,y: -1}, {x: 1, y: 0},{x: -1,y: -1},],
         class: ['two-top', 'two']
       },
       {
-        //  □□
-        // □□
-        shape: [{
-            x: 0,
-            y: 0
-          },
-          {
-            x: 0,
-            y: -1
-          },
-          {
-            x: -1,
-            y: 0
-          },
-          {
-            x: 1,
-            y: -1
-          },
-        ],
+        // s
+        shape: [{x: 0, y: 0}, {x: 0,y: -1},{x: -1, y: 0}, {x: 1,y: -1},],
         class: ['s-top', 's']
-      }
-
-    ]
+      }]
     this.type = type
     this.nowBlock = this.block[type].shape
     this.tile = tile
@@ -221,39 +96,37 @@ class Block {
     [tempx,tempy]=[tempx - this.nowBlock[0].x,tempy - this.nowBlock[0].y]
     this.nowBlock.forEach(item => [item.x, item.y] = [item.x + tempx, item.y + tempy]);
   }
-  move(e) {
+  move(code) {
     let tempBlock = JSON.parse(JSON.stringify(this.nowBlock))
 
-    if (e.keyCode === 37) { //左
+    if (code === 37) { //左
       this.nowBlock.forEach(item => item.x--);
-    } else if (e.keyCode === 38) { //上
+    } else if (code === 38) { //上
       this.rot();
-    } else if (e.keyCode === 39) { //右
+    } else if (code === 39) { //右
       this.nowBlock.forEach(item => item.x++);
-    } else if (e.keyCode === 40) { //下
+    } else if (code === 40) { //下
       this.nowBlock.forEach(item => item.y++);
-    } else if (e.keyCode === 13) { //一番下まで落とす
+    } else if (code === 13) { //一番下まで落とす
       for (let i = 0; i < this.tile.y; i++) {
         this.nowBlock.forEach(item => item.y++)
-        e = JSON.parse(JSON.stringify(e))
-        e.keyCode = 40
-        this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, e)
+        this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, 40)
       }
     }
-    this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, e)
+    this.nowBlock = this.chechTouchAndFix(this.nowBlock, tempBlock, code)
     this.draw()
   }
-  chechTouchAndFix(b, tempBlock, e) { //壁に触った 他のブロックと触ったなどを検知して修正
+  chechTouchAndFix(b, tempBlock, code) { //壁に触った 他のブロックと触ったなどを検知して修正
     let count = 0;
     b.forEach((item, i) => {
       if (this.tile.tile[item.y][item.x] == 1) { //1と接触したらその方向へは進めない
-        if (e.keyCode === 37 || item.x == 0) { //左
+        if (code === 37 || item.x == 0) { //左
           b.forEach(it => it.x++);
-        } else if (e.keyCode === 39 || item.x == this.tile.x - 1) { //右
+        } else if (code === 39 || item.x == this.tile.x - 1) { //右
           b.forEach(it => it.x--);
-        } else if (e.keyCode === 40 || this.tile.y - 1) { //下
+        } else if (code === 40 || this.tile.y - 1) { //下
           b.forEach(it => it.y--);
-        } else if (e.keyCode === 38) { //上
+        } else if (code === 38) { //上
           if (b[0].y - item.y > 0) { //回転して既存ブロックにぶつかったら避ける
             b.forEach(i => i.y++);
             count++
@@ -284,7 +157,7 @@ class Block {
   fixed() { //ブロックを固定
     this.nowBlock.forEach(item => this.tile.tile[Math.abs(item.y)][Math.abs(item.x)] = 1);
   }
-  draw(tile) {
+  draw() {
     const X = this.tile.x
     const Y = this.tile.y
     let css
@@ -304,7 +177,6 @@ class Block {
     });
     //ガイドを描画
     this.guideDraw(guide)
-
   }
   guideDraw(guide) {
     let res
@@ -344,7 +216,7 @@ class Block {
     return false;
   }
   init() { //ブロックの初期位置
-    this.nowBlock.forEach((item) => {
+    this.nowBlock.forEach(item => {
       item.x += (this.tile.x - 2) / 2;
       item.y++;
     });
@@ -356,18 +228,44 @@ class App {
     // constructor(type = 3) {
     this.tile = new Tile();
     this.block = new Block(this.tile, type)
-    this.time = 0;
+    this.interval = 900;
+    this.nextBlockCount=0
+    this.previousBlockState=JSON.parse(JSON.stringify(this.block.nowBlock))
     window.onkeydown = (e) => {
-      this.block.move(e)
+      this.block.move(e.keyCode)
       if (e.keyCode == 13) {
-        this.createBlock()
+        this.nextBlockCount=-1;
+        this.gameStart()
       }
     }
   }
   init() {
     this.block.draw()
-    this.time++;
+    
   }
+gameStart(){
+  this.block.move(40)
+  this.movecheck()
+  // console.log('this.nextBlockCount',this.nextBlockCount)
+  if(this.nextBlockCount==1){//ブロックが動かなかったら
+    this.nextBlockCount=0
+    this.createBlock()
+  }
+  
+  
+  
+}
+movecheck(){
+  
+  if(JSON.stringify(this.previousBlockState)==JSON.stringify(this.block.nowBlock)){
+    console.log('一緒')
+    this.nextBlockCount++
+  }else{
+    console.log('NG')
+  this.previousBlockState=JSON.parse(JSON.stringify(this.block.nowBlock))  
+  }
+  
+}
   createBlock(type = this.getRandomIntInclusive(0, 6)) {
     // createBlock(type = 3) {
     this.block.fixed();
@@ -399,23 +297,22 @@ class App {
     //今のブロックの色の状態を保存
     tileCopy = JSON.parse(JSON.stringify(this.tile.tile))
 
-    for (let i = 0; i < lineNum + 1; i++) {
+    for (let i = 1; i < lineNum + 1; i++) {
       for (let j = 1; j < X - 1; j++) {
-        if (i != 0) {
           this.tile.tile[i][j] = tileCopy[i - 1][j]
           this.tile.td[i][j].className = tdCopy[i - 1][j]
-        }
       }
     }
   }
-  getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  getRandomIntInclusive(min, max) {//ランダムな整数の生成
+    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + min;
   }
 }
 
 window.onload = () => {
   let game = new App()
   game.init()
+  setInterval(function(){
+    game.gameStart()
+  },game.interval)
 }
