@@ -196,7 +196,6 @@ class Block {
         res = 0
         if (JSON.stringify(target) == JSON.stringify(item)) {
           res = 1
-          console.log('一致');
           break;
         }
       }
@@ -234,7 +233,7 @@ class App {
     window.onkeydown = (e) => {
       this.block.move(e.keyCode)
       if (e.keyCode == 13) {
-        this.nextBlockCount=-1;
+        this.nextBlockCount=0;
         this.gameStart()
       }
     }
@@ -258,10 +257,8 @@ gameStart(){
 movecheck(){
   
   if(JSON.stringify(this.previousBlockState)==JSON.stringify(this.block.nowBlock)){
-    console.log('一緒')
     this.nextBlockCount++
   }else{
-    console.log('NG')
   this.previousBlockState=JSON.parse(JSON.stringify(this.block.nowBlock))  
   }
   
