@@ -56,6 +56,7 @@ table.stock {
 
 div {
   color:white;
+  font-weight: bold;
   text-align: center;
   display: inline-block;
   float: left;
@@ -74,7 +75,7 @@ div.stock {
 }
 
 div.next {
-  background: linear-gradient(0deg,  rgb(131, 202, 247),rgb(5, 191, 196));
+  background: linear-gradient(0deg,  rgb(0, 110, 180),rgb(24, 202, 207));
   border-radius: 0 20px 20px 0;
   width: 100px;
   height: 300px;
