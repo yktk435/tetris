@@ -82,37 +82,37 @@ class Block {
     this.block = [{
         // ┻
         shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 0,y: -1},{x: -1, y: 0 },],
-        class: ['mountain-top', 'mountain']
+        class: ['mountain-top', 'mountain','mountain-top']
       }, {
         // 田
         shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 1,y: -1}, {x: 0,y: -1},],
-        class: ['square-top', 'square']
+        class: ['square-top', 'square','square-top']
       },
       {
         // ┛
         shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: -1,y: -1},],
         
-        class: ['ano-l-top', 'ano-l']
+        class: ['ano-l-top', 'ano-l','l-top']
       },
       {
         // ┗
         shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1},{x: 1,y: -1},],
-        class: ['l-top', 'l']
+        class: ['l-top', 'l','l-top']
       },
       {
         // |
         shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: 0, y: 2},],
-        class: ['stick-top', 'stick']
+        class: ['stick-top', 'stick','stick-top']
       },
       {
         //2
         shape: [{x: 0, y: 0}, {x: 0,y: -1}, {x: 1, y: 0},{x: -1,y: -1},],
-        class: ['two-top', 'two']
+        class: ['two-top', 'two','two-top']
       },
       {
         // s
         shape: [{x: 0, y: 0}, {x: 0,y: -1},{x: -1, y: 0}, {x: 1,y: -1},],
-        class: ['s-top', 's']
+        class: ['s-top', 's','s-top']
       }]
     this.type = type
     this.nowBlock = JSON.parse(JSON.stringify(this.block[type].shape))
@@ -208,7 +208,7 @@ class Block {
     }
     //描画
     this.nowBlock.forEach((item, i) => {
-      css = this.block[this.type].class[1]
+      css = this.block[this.type].class[0]
       css = this.isBlockOonBlock(item, this.nowBlock) ? this.block[this.type].class[1] : css
       this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = css
     });

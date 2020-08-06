@@ -31,7 +31,7 @@ table.mini {
 
 .mini td {
   /* background-color: rgb(14, 117, 29); */
-  border-radius: 1px;
+  /* border-radius: 1px; */
   border: 1px solid rgb(0, 0, 0);
 }
 
@@ -50,7 +50,7 @@ table.stock {
 }
 
 .stock td {
-  border-radius: 1px;
+  /* border-radius: 1px; */
   border: 1px solid rgb(0, 0, 0,0);
 }
 
@@ -91,8 +91,8 @@ table.next {
 
 .next td {
   /* background-color: rgb(14, 117, 29); */
-  border-radius: 1px;
-  border: 1px solid rgb(0, 0, 0,0);
+  /* border-radius: 1px; */
+  border: 0px solid rgb(0, 0, 0,0);
 }
 div.next-block{
   display: block;
@@ -104,13 +104,25 @@ div.next-block{
 
 .white-block{
   background-color: rgb(255, 255, 255);
+  border-radius: 0px;
 }
   
 .outarea {
   background: linear-gradient(0deg, rgb(66, 0, 207), rgb(45, 4, 161));
   border-radius: 1px;
+  position: relative;
+  z-index: 99;
 }
-
+.light{
+  display: block;
+  width: 30px;
+  height: 8px;
+  /* background-color: red; */
+  top: -8px;
+  left: 0px;
+  position: absolute;
+  z-index: 0;
+}
 .curve {
   border-radius: 100px 25px 50px 50px;
 }
@@ -118,6 +130,7 @@ div.next-block{
 .default {
   background-color: rgb(1, 0, 54, 0.75);
   border-radius: 6px;
+  position: relative;
 }
 
 .test {
@@ -128,84 +141,136 @@ div.next-block{
   background-color: #03A9F4;
   border-top: 8px solid #80D8FF;
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .stick {
   background-color: #03A9F4;
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .mountain-top {
   background-color: rgb(84, 22, 215);
   border-top: 8px solid rgb(108, 57, 215);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .mountain {
   background-color: rgb(84, 22, 215);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
+  
 }
 
 .square-top {
   background-color: rgb(185, 189, 3);
   border-top: 8px solid rgb(255, 253, 88);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .square {
   background-color: rgb(185, 189, 3);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .ano-l-top {
   background-color: rgb(204, 92, 0);
   border-top: 8px solid rgb(230, 138, 0);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .ano-l {
   background-color: rgb(204, 92, 0);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .l-top {
   background-color: rgb(37, 76, 152);
   border-top: 8px solid rgb(113, 173, 254);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .l {
   background-color: rgb(37, 76, 152);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .two-top {
   background-color: rgb(162, 5, 0);
   border-top: 8px solid rgb(251, 59, 59);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .two {
   background-color: rgb(162, 5, 0);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .s-top {
   background-color: rgb(0, 181, 2);
   border-top: 8px solid rgb(74, 255, 97);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .s {
   background-color: rgb(0, 181, 2);
   box-shadow: 10px 15px 0 rgb(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
 .guide {
   background-color: rgba(145, 145, 145, 0.5);
+  position: relative;
 }
 
 /* ストック */
 div {
   display: inline-block;
+}
+
+.stick-top-light {
+  border-top: 8px solid #80D8FF;
+}
+.mountain-top-light {
+  border-top: 8px solid rgb(108, 57, 215);
+}
+.square-top-light {
+  border-top: 8px solid rgb(255, 253, 88);
+}
+.ano-l-light-top {
+  border-top: 8px solid rgb(230, 138, 0);
+}
+.l-top-light {
+  border-top: 8px solid rgb(113, 173, 254);
+}
+.two-top-light {
+  border-top: 8px solid rgb(251, 59, 59);
+}
+.s-top-light {
+  border-top: 8px solid rgb(74, 255, 97);
 }
