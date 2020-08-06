@@ -55,13 +55,18 @@ table.stock {
 }
 
 div {
+  color:white;
+  text-align: center;
   display: inline-block;
   float: left;
   position: relative;
 }
-
+p{
+  margin-bottom: 0px;
+}
 div.stock {
-  background-color: rgb(255, 60, 60);
+  background: linear-gradient(45deg,  rgb(255, 60, 60),rgb(246, 156, 106));
+  
   border-radius: 20px 0 0 20px;
   width: 100px;
   height: 200px;
@@ -69,10 +74,11 @@ div.stock {
 }
 
 div.next {
-  background: linear-gradient(0deg, rgb(44, 174, 215), rgb(107, 255, 220));
+  background: linear-gradient(0deg,  rgb(131, 202, 247),rgb(5, 191, 196));
   border-radius: 0 20px 20px 0;
   width: 100px;
-  height: 200px;
+  height: 300px;
+  
   position: relative;
 }
 
@@ -85,17 +91,18 @@ table.next {
 .next td {
   /* background-color: rgb(14, 117, 29); */
   border-radius: 1px;
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0,0);
 }
 div.next-block{
   display: block;
-  margin: auto;
+  margin: 10px auto;
+
   width: 100%;
   /* background-color: red; */
 }
 
 .white-block{
-  background-color: rgb(198, 196, 196);
+  background-color: rgb(255, 255, 255);
 }
   
 .outarea {

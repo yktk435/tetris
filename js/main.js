@@ -31,8 +31,12 @@ class Tile {
     ]
     this.stockEl=document.querySelectorAll('.stock td')
     this.nextBlockEl=document.querySelectorAll('.next td')
-    this.stockTd=this.createMiniTd(this.stockEl)
-    this.nextBlockTd=this.createMiniTd(this.nextBlockEl)
+    this.stockTd=this.createStockTd(this.stockEl)
+    this.nextBlockTd=[
+      [this.createStockTd(this.nextBlockEl)[0],this.createStockTd(this.nextBlockEl)[1]],
+      [this.createStockTd(this.nextBlockEl)[2],this.createStockTd(this.nextBlockEl)[3]],
+      [this.createStockTd(this.nextBlockEl)[4],this.createStockTd(this.nextBlockEl)[5]],
+    ]
     
   }
   createTd() {
@@ -48,7 +52,19 @@ class Tile {
     })
     return table
   }
-  createMiniTd(d){
+  createStockTd(d){
+    let tmp = []
+    let table = []
+    d.forEach((el, i) => {
+      tmp.push(el)
+      if ((i + 1) % 4 == 0) {
+        table.push(tmp)
+        tmp = []
+      }
+    })
+    return table
+  }
+  createNextBlockTd(d){
     let tmp = []
     let table = []
     d.forEach((el, i) => {
@@ -75,14 +91,15 @@ class Block {
         class: ['square-top', 'square']
       },
       {
-        // ┗
-        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: 1,y: -1},],
-        class: ['l-top', 'l']
+        // ┛
+        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: -1,y: -1},],
+        
+        class: ['ano-l-top', 'ano-l']
       },
       {
-        // ┛
-        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1},{x: -1,y: -1},],
-        class: ['ano-l-top', 'ano-l']
+        // ┗
+        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1},{x: 1,y: -1},],
+        class: ['l-top', 'l']
       },
       {
         // |
@@ -106,7 +123,6 @@ class Block {
 
   }
   rot() { //右回転
-    console.log(this.nowBlock)
     if (this.type == 1) { //ブロックが四角(田)のやつなら何もしない
       return;
     }
@@ -118,7 +134,6 @@ class Block {
     //平行移動
     [tempx,tempy]=[tempx - this.nowBlock[0].x,tempy - this.nowBlock[0].y]
     this.nowBlock.forEach(item => [item.x, item.y] = [item.x + tempx, item.y + tempy]);
-    console.log(this.nowBlock)
   }
   move(code) {
     let tempBlock = JSON.parse(JSON.stringify(this.nowBlock))
@@ -260,7 +275,16 @@ class App {
     this.previousBlockState=JSON.parse(JSON.stringify(this.block.nowBlock))
     this.stockBlockIns
     this.nextBlockIns=[new Block(this.tile),new Block(this.tile),new Block(this.tile)]
-    // console.log(this.nextBlockIns)
+    this.stockBlock=[
+      [{x:1,y:0},{x:0,y:1},{x:1,y:1},{x:2,y:1}],
+      [{x:1,y:0},{x:2,y:0},{x:1,y:1},{x:2,y:1}],
+      [{x:2,y:0},{x:0,y:1},{x:1,y:1},{x:2,y:1}],
+      [{x:0,y:0},{x:0,y:1},{x:1,y:1},{x:2,y:1}],
+      [{x:0,y:1},{x:1,y:1},{x:2,y:1},{x:3,y:1}],
+      [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:2,y:1}],
+      [{x:1,y:0},{x:2,y:0},{x:0,y:1},{x:1,y:1}],
+    ];
+    this.stockType=null
     
     window.onkeydown = (e) => {
       this.block.move(e.keyCode)
@@ -303,7 +327,7 @@ movecheck(){
     this.block = this.nextBlockIns[0]
     this.nextBlockIns.shift()
     this.nextBlockIns.push(new Block(this.tile))
-    
+    this.drawNextBlock()
     this.init()
   }
   alignCheckAndFix() { //1行揃っているかチェックして行を消す
@@ -338,19 +362,9 @@ movecheck(){
     }
   }
   drawStock(){
-    
     const Y=this.tile.y
     const X=this.tile.x
-    let stockBlock=[
-      [{x:1,y:0},{x:0,y:1},{x:1,y:1},{x:2,y:1}],
-      [{x:1,y:0},{x:2,y:0},{x:1,y:1},{x:2,y:1}],
-      [{x:2,y:0},{x:0,y:1},{x:1,y:1},{x:2,y:1}],
-      [{x:0,y:0},{x:0,y:1},{x:1,y:1},{x:2,y:1}],
-      [{x:0,y:1},{x:1,y:1},{x:2,y:1},{x:3,y:1}],
-      [{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:2,y:1}],
-      [{x:1,y:0},{x:2,y:0},{x:0,y:1},{x:1,y:1}],
-    ];
-    
+    let tempType=0
     
     
     // タイル初期化
@@ -360,21 +374,49 @@ movecheck(){
       }
     }    
     // ミニタイル初期化
-    stockBlock[this.block.type].forEach((item, i) => {
-      this.tile.stockTd[item.y][item.x].className = ''
-    });    
-    
+    for (let i = 0; i < 2; i++) {
+      for (let j = 0; j < 4; j++) {
+        this.tile.stockTd[i][j].className= ''
+      }
+    }    
+    if(this.stockType==null){
+    this.stockType=this.block.type
     this.block = this.nextBlockIns[0]
     this.nextBlockIns.shift()
     this.nextBlockIns.push(new Block(this.tile))
+    this.drawNextBlock()
     this.init()
-    
-    stockBlock[this.block.type].forEach((item, i) => {
+    }else{
+      tempType=this.block.type
+      this.block = new Block(this.tile,this.stockType)
+      this.init()
+    this.stockType=tempType
+    }
+    //描画
+    this.stockBlock[this.stockType].forEach((item, i) => {
       this.tile.stockTd[item.y][item.x].className = 'white-block'
     });
 
   }
-  drawNextBlock(){    
+  drawNextBlock(){
+    
+      
+      // ミニタイル初期化
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 2; j++) {
+          for (let k = 0; k < 4; k++) {
+            console.log(this.tile.nextBlockTd[i][j][k])
+            this.tile.nextBlockTd[i][j][k].className=  ''
+          }
+        }    
+        this.stockBlock[this.nextBlockIns[i].type].forEach(item => {
+          this.tile.nextBlockTd[i][item.y][item.x].className = 'white-block'
+        });
+      }
+      
+      
+    
+    
   }
 
 }
@@ -382,6 +424,7 @@ movecheck(){
 window.onload = () => {
   let game = new App()
   game.init()
+  game.drawNextBlock()
   // setInterval(function(){
   //   game.gameStart()
   // },game.interval)
