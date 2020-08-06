@@ -25,7 +25,7 @@ table.mini {
   background: linear-gradient(0deg, rgb(255, 0, 0, 0), rgb(255, 230, 0, 0));
   /* background-color: rgb(14, 117, 29); */
   margin: 10px auto;
-  width: 120px;
+  width: 80px;
   height: 40px;
 }
 
@@ -39,8 +39,8 @@ table.stock {
   border-collapse: collapse;
   border-spacing: 0px;
   background: linear-gradient(0deg, rgb(255, 0, 0, 0), rgb(255, 230, 0, 0));
-  width: 120px;
-  height: 40px;
+  
+  
   
   position: absolute;
   margin: auto;
@@ -50,9 +50,8 @@ table.stock {
 }
 
 .stock td {
-  /* background-color: rgb(14, 117, 29); */
   border-radius: 1px;
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0,0);
 }
 
 div {
@@ -64,15 +63,15 @@ div {
 div.stock {
   background-color: rgb(255, 60, 60);
   border-radius: 20px 0 0 20px;
-  width: 150px;
-  height: 80px;
+  width: 100px;
+  height: 200px;
   position: relative;
 }
 
 div.next {
   background: linear-gradient(0deg, rgb(44, 174, 215), rgb(107, 255, 220));
   border-radius: 0 20px 20px 0;
-  width: 150px;
+  width: 100px;
   height: 200px;
   position: relative;
 }
@@ -80,8 +79,7 @@ div.next {
 table.next {
   background: linear-gradient(0deg, rgb(255, 0, 0, 0), rgb(255, 230, 0, 0));
   /* background-color: rgb(14, 117, 29); */
-  width: 120px;
-  height: 40px;
+  
 }
 
 .next td {
@@ -90,34 +88,16 @@ table.next {
   border: 1px solid rgb(0, 0, 0);
 }
 div.next-block{
-  display: inline-block;
+  display: block;
   margin: auto;
-  background-color: red;
-  
-  
-  margin: auto;
-  
-  
-}
-.div1 {
-  background: red;
-  position: relative;
-  height: 8px;
-  width: 105%;
-  z-index: 0;
-  bottom: 20px;
-  left: -1px;
-}
-
-.div2 {
-  background: darkred;
-  position: inherit;
   width: 100%;
-  height: 42px;
-  z-index: 5;
-  top: 20%;
+  /* background-color: red; */
 }
 
+.white-block{
+  background-color: rgb(198, 196, 196);
+}
+  
 .outarea {
   background: linear-gradient(0deg, rgb(66, 0, 207), rgb(45, 4, 161));
   border-radius: 1px;
