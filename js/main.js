@@ -37,6 +37,37 @@ class Tile {
       [nextBlockTd[2], nextBlockTd[3]],
       [nextBlockTd[4], nextBlockTd[5]],
     ]
+    this.tdDiv=this.createTdDiv();
+    console.log(this.tdDiv)
+    
+    this.tdDivCopy=this.createtdDivCopy()
+    console.log(this.tdDivCopy)
+    
+    
+
+
+
+  }
+  createtdDivCopy(){
+    let temp=[]
+    let tdDivCopy=[]
+    this.tdDiv.forEach((item, i) => {
+      temp=[]
+      item.forEach((item2, j) => {
+        temp.push({td:{className:item2.td.className},div:{className:item2.div.className}})
+      });
+      tdDivCopy.push(temp)
+    });
+    return tdDivCopy
+  }
+  createTdDiv(){
+    let res=[]
+    this.td.forEach((item, i) => {
+      let temp = []
+      item.forEach(item2 => temp.push({td:item2,div:item2.childNodes[0]}));
+      res.push(temp)
+    })
+    return res
   }
   createTd() {
     let d = Array.from(document.querySelectorAll('#game td'));
@@ -82,37 +113,36 @@ class Block {
     this.block = [{
         // ┻
         shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 0,y: -1},{x: -1, y: 0 },],
-        class: ['mountain-top', 'mountain','mountain-top']
+        class: ['mountain-top', 'mountain','mountain-top-light']
       }, {
         // 田
         shape: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 1,y: -1}, {x: 0,y: -1},],
-        class: ['square-top', 'square','square-top']
-      },
-      {
-        // ┛
-        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: -1,y: -1},],
-        
-        class: ['ano-l-top', 'ano-l','l-top']
+        class: ['square-top', 'square','square-top-light']
       },
       {
         // ┗
+        shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: -1,y: -1},],
+        class: ['l-top', 'l','l-top-light']
+      },
+      {
+        // ┛
         shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1},{x: 1,y: -1},],
-        class: ['l-top', 'l','l-top']
+        class: ['ano-l-top', 'ano-l','ano-l-top-light']
       },
       {
         // |
         shape: [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0,y: -1}, {x: 0, y: 2},],
-        class: ['stick-top', 'stick','stick-top']
+        class: ['stick-top', 'stick','stick-top-light']
       },
       {
         //2
         shape: [{x: 0, y: 0}, {x: 0,y: -1}, {x: 1, y: 0},{x: -1,y: -1},],
-        class: ['two-top', 'two','two-top']
+        class: ['two-top', 'two','two-top-light']
       },
       {
         // s
         shape: [{x: 0, y: 0}, {x: 0,y: -1},{x: -1, y: 0}, {x: 1,y: -1},],
-        class: ['s-top', 's','s-top']
+        class: ['s-top', 's','s-top-light']
       }]
     this.type = type
     this.nowBlock = JSON.parse(JSON.stringify(this.block[type].shape))
@@ -162,6 +192,7 @@ class Block {
         } else if (code === 39 || item.x == this.tile.x - 1) { //右
           b.forEach(it => it.x--);
         } else if (code === 40 || this.tile.y - 1) { //下
+          console.log('下')
           b.forEach(it => it.y--);
         } else if (code === 38) { //上
           if (b[0].y - item.y > 0) { //回転して既存ブロックにぶつかったら避ける
@@ -193,8 +224,10 @@ class Block {
   }
   fixed() { //ブロックを固定
     this.nowBlock.forEach(item => this.tile.tile[Math.abs(item.y)][Math.abs(item.x)] = 1);
+    this.tile.tdDivCopy=this.tile.createtdDivCopy()
   }
   draw() {
+    let temp=[]
     const X = this.tile.x
     const Y = this.tile.y
     let css
@@ -203,15 +236,57 @@ class Block {
     //タイル初期化
     for (let i = 0; i < Y - 1; i++) {
       for (let j = 1; j < X - 1; j++) {
-        this.tile.td[i][j].className = this.tile.tile[i][j] == 0 ? 'default' : this.tile.td[i][j].className
+        this.tile.tdDiv[i][j].td.className = this.tile.tile[i][j] == 0 ? 'default' : this.tile.tdDiv[i][j].td.className
+        this.tile.tdDiv[i][j].div.className = this.tile.tile[i][j] == 0 ? '' : this.tile.tdDiv[i][j].div.className
       }
     }
     //描画
     this.nowBlock.forEach((item, i) => {
-      css = this.block[this.type].class[0]
-      css = this.isBlockOonBlock(item, this.nowBlock) ? this.block[this.type].class[1] : css
-      this.tile.td[Math.abs(item.y)][Math.abs(item.x)].className = css
+      css = this.block[this.type].class[1]//top
+      if(this.isBlockOonBlock(item, this.nowBlock)){//上のブロックがあるなら
+        // 光なしの色
+        css=this.block[this.type].class[1]
+        this.tile.td[item.y][item.x].className = css
+      }else{
+        this.tile.td[item.y][item.x].className = css
+        //光ありの色
+        this.tile.td[item.y][item.x].childNodes[0].className = "light "+this.block[this.type].class[2]
+       }
+      if(item.y+1<19 ){
+        if(this.tile.tile[item.y+1][item.x]==1){
+          //光取る
+            this.tile.td[item.y+1][item.x].childNodes[0].className='light'
+        }else if(this.tile.tile[item.y-1][item.x] && this.tile.tile[item.y-1][item.x]==1){
+          //光取る
+          this.tile.td[item.y][item.x].childNodes[0].className='light'
+        }
+      }
     });
+    
+    let bool=0
+    //ブロックの下の立体表現を描画
+    for (let y = 0; y < Y - 1; y++) {
+      for (let x = 1; x < X - 1; x++) {
+        bool=0
+        if(this.tile.tile[y][x]==1){
+          this.nowBlock.forEach((item, i) => {
+            if(item.x==x && item.y==y-1){
+              bool=true
+            }
+          })
+          if(bool){//その上に今動かしているブロックがあったら光効果をけす
+            this.tile.tdDiv[y][x].div.className='light'
+            
+          }else{//光効果をつける
+            this.tile.tdDiv[y][x].div.className= this.tile.tdDivCopy[y][x].div.className
+          }
+        }
+      }
+    }
+    let tileCopy
+    //今のブロックの色の状態を保存
+    tileCopy = JSON.parse(JSON.stringify(this.tile.tile))
+
     //ガイドを描画
     this.guideDraw(guide)
   }
@@ -329,26 +404,29 @@ class App {
         this.removeLine(i)
       }
     }
+    this.tile.tdDivCopy=this.tile.createtdDivCopy()
   }
   removeLine(lineNum) { //行を消してブロックを落とす
     const X = this.tile.x
     const Y = this.tile.y
     let tdCopy = [];
     let tileCopy;
-
+    console.log(this.tile.td)
     // デザインの状態を保存
     this.tile.td.forEach((item, i) => {
       let temp = []
-      item.forEach(item2 => temp.push(item2.className));
+      item.forEach(item2 => temp.push({td:item2.className,div:item2.childNodes[0].className}));
       tdCopy.push(temp)
     })
+    console.log(tdCopy)
     //今のブロックの色の状態を保存
     tileCopy = JSON.parse(JSON.stringify(this.tile.tile))
-
+    //再描画
     for (let i = 1; i < lineNum + 1; i++) {
       for (let j = 1; j < X - 1; j++) {
         this.tile.tile[i][j] = tileCopy[i - 1][j]
-        this.tile.td[i][j].className = tdCopy[i - 1][j]
+        this.tile.td[i][j].className = tdCopy[i - 1][j].td
+        this.tile.td[i][j].childNodes[0].className = tdCopy[i - 1][j].div
       }
     }
   }

@@ -130,7 +130,7 @@ div.next-block{
 .default {
   background-color: rgb(1, 0, 54, 0.75);
   border-radius: 6px;
-  position: relative;
+  /* position: relative; */
 }
 
 .test {
@@ -246,6 +246,7 @@ div.next-block{
 .guide {
   background-color: rgba(145, 145, 145, 0.5);
   position: relative;
+  z-index:100;
 }
 
 /* ストック */
@@ -262,7 +263,7 @@ div {
 .square-top-light {
   border-top: 8px solid rgb(255, 253, 88);
 }
-.ano-l-light-top {
+.ano-l-top-light{
   border-top: 8px solid rgb(230, 138, 0);
 }
 .l-top-light {
