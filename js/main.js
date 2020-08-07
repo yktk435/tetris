@@ -257,7 +257,7 @@ class Block {
       if(item.y+1<19){
         // this.nowBlockの下にブロックがあるなら
         if(this.tile.tile[item.y+1][item.x]==1){
-          console.log('nowBlockの下にブロックがる')
+          // console.log('nowBlockの下にブロックがる')
           //そのブロックの光取る
             this.tile.tdDiv[item.y+1][item.x].div.className=''
         }
@@ -266,7 +266,7 @@ class Block {
         // }
         if(item.y>0 && this.tile.tile[item.y-1][item.x]==1){// this.nowBlockの上にブロックがあるなら
           //this.nowBlockの光取る
-          console.log('nowBlock上にブロックがある')
+          // console.log('nowBlock上にブロックがある')
           this.tile.tdDiv[item.y][item.x].div.className=''
         }
         // else{
@@ -516,7 +516,7 @@ window.onload = () => {
   let game = new App()
   game.init()
   game.drawNextBlock()
-  // setInterval(function() {
-  //   game.gameStart()
-  // }, game.interval)
+  setInterval(function() {
+    game.gameStart()
+  }, game.interval)
 }

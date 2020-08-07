@@ -20,6 +20,7 @@ td {
   /* 横10マス */
   height: 5%;
   /* 縦20マス */
+  color: rgba(184, 183, 172, 0);
 }
 
 table.mini {
