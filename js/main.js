@@ -339,7 +339,7 @@ class App {
     // constructor(type = 3) {
     this.tile = new Tile();
     this.block = new Block(this.tile)
-    this.interval = 900;
+    this.interval = 750;
     this.nextBlockCount = 0
     this.previousBlockState = JSON.parse(JSON.stringify(this.block.nowBlock))
     this.stockBlockIns
@@ -364,7 +364,10 @@ class App {
       }
       this.drawLight()
     }
-    stock.addEventListener('click', () => this.drawStock())
+    stock.addEventListener('click', () => {
+      this.drawStock()
+      this.drawLight()
+    })
   }
   drawLight(){
     let bool=0
@@ -376,7 +379,7 @@ class App {
         // console.log('for開始')
         for (var item of this.block.nowBlock) {
           if(item.x==x && item.y==y-1){
-            console.log(item)
+            // console.log(item)
             bool=1
             break
           }
@@ -411,6 +414,7 @@ class App {
       this.tile.tdDivCopy=this.tile.createtdDivCopy()
       this.createBlock()
     }
+    this.drawLight()
   }
   movecheck() {
     if (JSON.stringify(this.previousBlockState) == JSON.stringify(this.block.nowBlock)) {
