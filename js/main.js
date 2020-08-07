@@ -192,7 +192,6 @@ class Block {
         } else if (code === 39 || item.x == this.tile.x - 1) { //右
           b.forEach(it => it.x--);
         } else if (code === 40 || this.tile.y - 1) { //下
-          console.log('下')
           b.forEach(it => it.y--);
         } else if (code === 38) { //上
           if (b[0].y - item.y > 0) { //回転して既存ブロックにぶつかったら避ける
@@ -224,7 +223,10 @@ class Block {
   }
   fixed() { //ブロックを固定
     this.nowBlock.forEach(item => this.tile.tile[Math.abs(item.y)][Math.abs(item.x)] = 1);
-    this.tile.tdDivCopy=this.tile.createtdDivCopy()
+    
+    // 今のcssのクラスの状態を抽出
+    // this.tile.tdDivCopyを使えば元の状態に戻せる
+    // this.tile.tdDivCopy=this.tile.createtdDivCopy()
   }
   draw() {
     let temp=[]
@@ -237,52 +239,46 @@ class Block {
     for (let i = 0; i < Y - 1; i++) {
       for (let j = 1; j < X - 1; j++) {
         this.tile.tdDiv[i][j].td.className = this.tile.tile[i][j] == 0 ? 'default' : this.tile.tdDiv[i][j].td.className
-        this.tile.tdDiv[i][j].div.className = this.tile.tile[i][j] == 0 ? '' : this.tile.tdDiv[i][j].div.className
+        this.tile.tdDiv[i][j].div.className = this.tile.tile[i][j] == 0 ? '' : this.tile.tdDivCopy[i][j].div.className
       }
     }
     //描画
     this.nowBlock.forEach((item, i) => {
-      css = this.block[this.type].class[1]//top
-      if(this.isBlockOonBlock(item, this.nowBlock)){//上のブロックがあるなら
-        // 光なしの色
-        css=this.block[this.type].class[1]
-        this.tile.td[item.y][item.x].className = css
-      }else{
-        this.tile.td[item.y][item.x].className = css
-        //光ありの色
-        this.tile.td[item.y][item.x].childNodes[0].className = "light "+this.block[this.type].class[2]
+      // this.nowBlock自体に光をつける
+      css = this.block[this.type].class[1]//1：普通 2：光あり
+      this.tile.td[item.y][item.x].className = css
+      if(!this.isBlockOonBlock(item, this.nowBlock)){//上にブロックがないなら
+        //光をつける
+        this.tile.tdDiv[item.y][item.x].div.className = this.block[this.type].class[2]
        }
-      if(item.y+1<19 ){
+       
+       // this.nowBlockの周りのブロクの光を変更する
+      
+      if(item.y+1<19){
+        // this.nowBlockの下にブロックがあるなら
         if(this.tile.tile[item.y+1][item.x]==1){
-          //光取る
-            this.tile.td[item.y+1][item.x].childNodes[0].className='light'
-        }else if(this.tile.tile[item.y-1][item.x] && this.tile.tile[item.y-1][item.x]==1){
-          //光取る
-          this.tile.td[item.y][item.x].childNodes[0].className='light'
+          console.log('nowBlockの下にブロックがる')
+          //そのブロックの光取る
+            this.tile.tdDiv[item.y+1][item.x].div.className=''
         }
+        // else{//もとに戻す
+        // this.tile.tdDiv[item.y+1][item.x].div.className=this.tile.tdDivCopy[item.y+1][item.x].div.className
+        // }
+        if(item.y>0 && this.tile.tile[item.y-1][item.x]==1){// this.nowBlockの上にブロックがあるなら
+          //this.nowBlockの光取る
+          console.log('nowBlock上にブロックがある')
+          this.tile.tdDiv[item.y][item.x].div.className=''
+        }
+        // else{
+        //   this.tile.tdDiv[item.y][item.x].div.className=this.tile.tdDivCopy[item.y][item.x].div.className
+        // }
       }
     });
+    // 
+    // let bool=0
+    //ブロック消して上になったブロックを光らせる
     
-    let bool=0
-    //ブロックの下の立体表現を描画
-    for (let y = 0; y < Y - 1; y++) {
-      for (let x = 1; x < X - 1; x++) {
-        bool=0
-        if(this.tile.tile[y][x]==1){
-          this.nowBlock.forEach((item, i) => {
-            if(item.x==x && item.y==y-1){
-              bool=true
-            }
-          })
-          if(bool){//その上に今動かしているブロックがあったら光効果をけす
-            this.tile.tdDiv[y][x].div.className='light'
-            
-          }else{//光効果をつける
-            this.tile.tdDiv[y][x].div.className= this.tile.tdDivCopy[y][x].div.className
-          }
-        }
-      }
-    }
+
     let tileCopy
     //今のブロックの色の状態を保存
     tileCopy = JSON.parse(JSON.stringify(this.tile.tile))
@@ -361,12 +357,43 @@ class App {
 
     window.onkeydown = (e) => {
       this.block.move(e.keyCode)
+      
       if (e.keyCode == 13) {
         this.nextBlockCount = 0;
         this.gameStart()
       }
+      this.drawLight()
     }
     stock.addEventListener('click', () => this.drawStock())
+  }
+  drawLight(){
+    let bool=0
+    const X = this.tile.x
+    const Y = this.tile.y
+    for (let y = 1; y < Y - 1; y++) {
+      for (let x = 1; x < X - 1; x++) {
+        bool=0
+        // console.log('for開始')
+        for (var item of this.block.nowBlock) {
+          if(item.x==x && item.y==y-1){
+            console.log(item)
+            bool=1
+            break
+          }
+        }
+        if(bool)continue
+        
+        if(this.tile.tile[y][x]==1 && this.tile.tile[y-1][x]==0){//一番上のブロクなら光らせる
+          // console.log('でんじざい')
+          this.tile.tdDiv[y][x].div.className=this.tile.tdDivCopy[y][x].td.className+"-top-light"
+          // this.tile.tdDiv[y][x].div.className="test-top-light"
+          // console.log('でんじざい2')
+        }else if (this.tile.tile[y][x]==1 && this.tile.tile[y-1][x]==1){
+          this.tile.tdDiv[y][x].div.className=''
+        }
+      }
+    }
+
   }
   init() {
     this.block.draw()
@@ -378,6 +405,10 @@ class App {
       this.nextBlockCount = 0
       this.block.fixed();
       this.alignCheckAndFix()
+      
+      // 今のcssのクラスの状態を抽出
+      // this.tile.tdDivCopyを使えば元の状態に戻せる
+      this.tile.tdDivCopy=this.tile.createtdDivCopy()
       this.createBlock()
     }
   }
@@ -404,6 +435,7 @@ class App {
         this.removeLine(i)
       }
     }
+    // 今の状態のCSSの設定を文字で保存
     this.tile.tdDivCopy=this.tile.createtdDivCopy()
   }
   removeLine(lineNum) { //行を消してブロックを落とす

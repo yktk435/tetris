@@ -250,8 +250,15 @@ div.next-block{
 }
 
 /* ストック */
-div {
-  display: inline-block;
+td>div {
+  display: block;
+  width: 30px;
+  height: 8px;
+  /* background-color: red; */
+  top: -8px;
+  left: 0px;
+  position: absolute;
+  z-index: 0;
 }
 
 .stick-top-light {
@@ -274,4 +281,7 @@ div {
 }
 .s-top-light {
   border-top: 8px solid rgb(74, 255, 97);
+}
+.test-top-light {
+  border-top: 8px solid rgb(255, 0, 222);
 }
