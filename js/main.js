@@ -42,11 +42,6 @@ class Tile {
     
     this.tdDivCopy=this.createtdDivCopy()
     console.log(this.tdDivCopy)
-    
-    
-
-
-
   }
   createtdDivCopy(){
     let temp=[]
@@ -261,24 +256,13 @@ class Block {
           //そのブロックの光取る
             this.tile.tdDiv[item.y+1][item.x].div.className=''
         }
-        // else{//もとに戻す
-        // this.tile.tdDiv[item.y+1][item.x].div.className=this.tile.tdDivCopy[item.y+1][item.x].div.className
-        // }
         if(item.y>0 && this.tile.tile[item.y-1][item.x]==1){// this.nowBlockの上にブロックがあるなら
           //this.nowBlockの光取る
           // console.log('nowBlock上にブロックがある')
           this.tile.tdDiv[item.y][item.x].div.className=''
         }
-        // else{
-        //   this.tile.tdDiv[item.y][item.x].div.className=this.tile.tdDivCopy[item.y][item.x].div.className
-        // }
       }
     });
-    // 
-    // let bool=0
-    //ブロック消して上になったブロックを光らせる
-    
-
     let tileCopy
     //今のブロックの色の状態を保存
     tileCopy = JSON.parse(JSON.stringify(this.tile.tile))
@@ -389,7 +373,6 @@ class App {
         if(this.tile.tile[y][x]==1 && this.tile.tile[y-1][x]==0){//一番上のブロクなら光らせる
           // console.log('でんじざい')
           this.tile.tdDiv[y][x].div.className=this.tile.tdDivCopy[y][x].td.className+"-top-light"
-          // this.tile.tdDiv[y][x].div.className="test-top-light"
           // console.log('でんじざい2')
         }else if (this.tile.tile[y][x]==1 && this.tile.tile[y-1][x]==1){
           this.tile.tdDiv[y][x].div.className=''
@@ -466,6 +449,8 @@ class App {
       }
     }
   }
+  
+  
   drawStock() {
     const Y = this.tile.y
     const X = this.tile.x
