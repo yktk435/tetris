@@ -345,6 +345,8 @@ class App {
       if (e.keyCode == 13) {
         this.nextBlockCount = 0;
         this.gameStart()
+      } else if (e.keyCode == 32) { 
+        this.drawStock()
       }
       this.drawLight()
     }
