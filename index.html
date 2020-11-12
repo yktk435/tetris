@@ -1,349 +1,355 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <title>テトリス</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js" type="text/javascript"></script>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>テトリス</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" type="text/javascript"></script>
+  </head>
 
-<body>
-  <div class="stock"><p>Hold</p>
-    <table class="mini stock">
-      <tbody>
-      <tr>
-        <td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <td></td><td></td><td></td><td></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div>
-    <table id="game">
-      <tr>
-        <td class="outarea">0<div></div></td>
-        <td class="default">1<div></div></td>
-        <td class="default">2<div></div></td>
-        <td class="default">3<div></div></td>
-        <td class="default">4<div></div></td>
-        <td class="default">5<div></div></td>
-        <td class="default">6<div></div></td>
-        <td class="default">7<div></div></td>
-        <td class="default">8<div></div></td>
-        <td class="default">9<div></div></td>
-        <td class="default">10<div></div></td>
-        <td class="outarea">11<div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">1<div></div></td>
-        <td class="default"><div class="light"></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">2<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">3<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">4<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">5<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">6<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">7<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">8<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">9<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">10<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">11<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">12<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">13<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">14<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">15<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">16<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">17<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">18<div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="default"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-      <tr>
-        <td class="outarea">19<div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-        <td class="outarea"><div></div></td>
-      </tr>
-    </table>
-  </div>
-  <div class="next">
-    <p>Next</p>
-    <div class="next-block">
-      <table class="mini next">
-        <tr>
-          <td></td><td></td><td></td><td></td>
-        </tr>
-        <tr>
-          <td></td><td></td><td></td><td></td>
-        </tr>
-      </table>      
-    </div>
-    <div class="next-block">
-      <table class="mini next">
-        <tr>
-          <td></td><td></td><td></td><td></td>
-        </tr>
-        <tr>
-          <td></td><td></td><td></td><td></td>
-        </tr>
-      </table>      
-    </div>
-    <div class="next-block">
-      <table class="mini next">
-        <tr>
-          <td></td><td></td><td></td><td></td>
-        </tr>
-        <tr>
-          <td></td><td></td><td></td><td></td>
-        </tr>
-      </table>      
-    </div>
+  <body>
+    <div style="position: relative;width: 100%;">
+      <div style="position: absolute;top: 50%;left: 50%;transform:
+        translate(-50%, 0%);width: max-content;">
+        <div class="stock"><p>Hold</p>
+          <table class="mini stock">
+            <tbody>
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <table id="game">
+            <tr>
+              <td class="outarea">0<div></div></td>
+              <td class="default">1<div></div></td>
+              <td class="default">2<div></div></td>
+              <td class="default">3<div></div></td>
+              <td class="default">4<div></div></td>
+              <td class="default">5<div></div></td>
+              <td class="default">6<div></div></td>
+              <td class="default">7<div></div></td>
+              <td class="default">8<div></div></td>
+              <td class="default">9<div></div></td>
+              <td class="default">10<div></div></td>
+              <td class="outarea">11<div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">1<div></div></td>
+              <td class="default"><div class="light"></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">2<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">3<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">4<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">5<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">6<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">7<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">8<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">9<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">10<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">11<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">12<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">13<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">14<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">15<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">16<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">17<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">18<div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="default"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+            <tr>
+              <td class="outarea">19<div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+              <td class="outarea"><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="next">
+          <p>Next</p>
+          <div class="next-block">
+            <table class="mini next">
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+            </table>
+          </div>
+          <div class="next-block">
+            <table class="mini next">
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+            </table>
+          </div>
+          <div class="next-block">
+            <table class="mini next">
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+            </table>
+          </div>
 
 
-  </div>
-  <div>
+        </div>
+        <div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        </div>
+      </div>
+      
+    </body>
 
-</body>
-
-</html>
+  </html>

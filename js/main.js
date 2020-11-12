@@ -500,6 +500,7 @@ class App {
 }
 
 window.onload = () => {
+  alert('Enter:下に落とす\nSpace:ストックする/ストックのブロックを使用\n↑:ブロック回転\n←/→:ブロックを左に移動/右に移動\n');
   let game = new App()
   game.init()
   game.drawNextBlock()
