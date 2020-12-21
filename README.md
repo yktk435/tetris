@@ -1,6 +1,8 @@
 # テトリス
 
+
 **※chrome推奨**
+ポートフォリサイトは[こちら](https://tetris.yktk435.live-on.net/)から
 
 ## 使用言語
 Javascript(ES6)とHTML、CSSで作成しました
