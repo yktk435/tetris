@@ -1,4 +1,7 @@
 # テトリス
+<div align="center">
+<img width="500" alt="スクリーンショット 2020-11-16 3 16 49" src="https://user-images.githubusercontent.com/43082614/102741998-2da76580-4397-11eb-96e3-94b31eb54ec0.png">
+</div>
 
 
 **※chrome推奨**
